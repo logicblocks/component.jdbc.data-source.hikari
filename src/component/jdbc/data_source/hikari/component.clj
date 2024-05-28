@@ -29,7 +29,7 @@
 
   (start [component]
     (with-logging logger :component.jdbc.data-source.hikari
-      {:phases {:start :starting :complete :started}
+      {:phases {:before :starting :after :started}
        :context {:configuration configuration}}
       (let [hikari-data-source
             (data-sources/hikari-data-source
@@ -38,7 +38,7 @@
 
   (stop [component]
     (with-logging logger :component.jdbc.data-source.hikari
-      {:phases  {:start :stopping :complete :stopped}
+      {:phases  {:before :stopping :after :stopped}
        :context {:configuration configuration}}
       (let [^Closeable data-source (:data-source component)]
         (when data-source
