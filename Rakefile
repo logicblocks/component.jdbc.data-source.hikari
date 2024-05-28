@@ -19,7 +19,7 @@ task default: %i[
 ]
 
 RakeLeiningen.define_installation_tasks(
-  version: '2.10.0'
+  version: '2.11.2'
 )
 
 RakeGitCrypt.define_standard_tasks(
@@ -79,7 +79,7 @@ namespace :keys do
         name_prefix: 'gpg',
         owner_name: 'LogicBlocks Maintainers',
         owner_email: 'maintainers@logicblocks.io',
-        owner_comment: 'component.jdbc-data-source.postgres CI Key'
+        owner_comment: 'component.jdbc.data-source.hikari CI Key'
       )
     end
 
@@ -120,7 +120,7 @@ end
 
 RakeCircleCI.define_project_tasks(
   namespace: :circle_ci,
-  project_slug: 'github/logicblocks/component.jdbc-data-source.postgres'
+  project_slug: 'github/logicblocks/component.jdbc.data-source.hikari'
 ) do |t|
   circle_ci_config =
     YAML.load_file('config/secrets/circle_ci/config.yaml')
@@ -142,7 +142,7 @@ end
 
 RakeGithub.define_repository_tasks(
   namespace: :github,
-  repository: 'logicblocks/component.jdbc-data-source.postgres'
+  repository: 'logicblocks/component.jdbc.data-source.hikari'
 ) do |t|
   github_config =
     YAML.load_file('config/secrets/github/config.yaml')
@@ -207,14 +207,14 @@ end
 namespace :database do
   namespace :test do
     RakeDocker.define_container_tasks(
-      container_name: 'postgres-data-source-test-database'
+      container_name: 'hikari-data-source-test-database'
     ) do |t|
       t.image = 'postgres:11.5'
-      t.ports = ['5432:5432']
-      t.environment = [
-        'POSTGRES_DB=some-database',
-        'POSTGRES_PASSWORD=super-secret',
-        'POSTGRES_USER=admin'
+      t.ports = ['5433:5432']
+      t.environment = %w[
+        POSTGRES_DB=some-database
+        POSTGRES_PASSWORD=super-secret
+        POSTGRES_USER=admin
       ]
     end
   end
