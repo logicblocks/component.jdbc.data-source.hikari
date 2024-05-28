@@ -1,4 +1,4 @@
-(defproject io.logicblocks/component.jdbc.data-source.hikari "0.1.3-RC7"
+(defproject io.logicblocks/component.jdbc.data-source.hikari "0.1.3-RC8"
   :description "A component providing a HikariCP JDBC data source."
   :url "https://github.com/logicblocks/component.jdbc.data-source.hikari"
 
