@@ -2,7 +2,7 @@
   (:require
    [component.jdbc.data-source.hikari.component :as component]))
 
-(defn hikari-jdbc-data-source
+(defn component
   ([]
    (component/map->HikariJdbcDataSource {}))
   ([configuration delegate]

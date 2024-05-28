@@ -28,12 +28,12 @@
         (swap! container component/stop)))))
 
 (deftest creates-hikari-data-source-with-default-parameters
-  (let [delegate (delegate-data-source)
+  (let [delegate {:instance (delegate-data-source)}
         configuration {}]
     (with-started-component
-      (hikari-component/hikari-jdbc-data-source configuration delegate)
+      (hikari-component/component configuration delegate)
       (fn [component]
-        (let [^HikariDataSource data-source (:data-source component)]
+        (let [^HikariDataSource data-source (:instance component)]
           (is (= 10 (.getMaximumPoolSize data-source)))
           (is (= 10 (.getMinimumIdle data-source)))
           (is (= (.toMillis TimeUnit/MINUTES 10)
@@ -46,7 +46,7 @@
           (is (true? (.isAutoCommit data-source))))))))
 
 (deftest uses-provided-configuration-for-hikaru-data-source
-  (let [delegate (delegate-data-source)
+  (let [delegate {:instance (delegate-data-source)}
         configuration
         {:pool-name          "main"
          :maximum-pool-size  15
@@ -56,9 +56,9 @@
          :maximum-lifetime   (.toMillis TimeUnit/MINUTES 20)
          :auto-commit        false}]
     (with-started-component
-      (hikari-component/hikari-jdbc-data-source configuration delegate)
+      (hikari-component/component configuration delegate)
       (fn [component]
-        (let [^HikariDataSource data-source (:data-source component)]
+        (let [^HikariDataSource data-source (:instance component)]
           (is (= 15 (.getMaximumPoolSize data-source)))
           (is (= 10 (.getMinimumIdle data-source)))
           (is (= (.toMillis TimeUnit/MINUTES 15)

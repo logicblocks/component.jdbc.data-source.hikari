@@ -24,7 +24,7 @@
      (fn [] ~@body)))
 
 (defrecord HikariJdbcDataSource
-  [configuration logger delegate data-source]
+  [configuration logger delegate instance]
   component/Lifecycle
 
   (start [component]
@@ -33,14 +33,15 @@
        :context {:configuration configuration}}
       (let [hikari-data-source
             (data-sources/hikari-data-source
-              (merge configuration {:data-source delegate}))]
-        (assoc component :data-source hikari-data-source))))
+              (merge configuration
+                {:data-source (:instance delegate)}))]
+        (assoc component :instance hikari-data-source))))
 
   (stop [component]
     (with-logging logger :component.jdbc.data-source.hikari
       {:phases  {:before :stopping :after :stopped}
        :context {:configuration configuration}}
-      (let [^Closeable data-source (:data-source component)]
+      (let [^Closeable data-source (:instance component)]
         (when data-source
           (.close data-source))
-        (assoc component :data-source nil)))))
+        (assoc component :instance nil)))))
