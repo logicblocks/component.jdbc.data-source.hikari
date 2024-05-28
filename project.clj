@@ -1,6 +1,6 @@
 (defproject io.logicblocks/component.jdbc.data-source.hikari "0.1.3-RC3"
   :description "A component providing a HikariCP JDBC data source."
-  :url "https://github.com/logicblocks/component.jdbc.data-source.postgres"
+  :url "https://github.com/logicblocks/component.jdbc.data-source.hikari"
 
   :license {:name "The MIT License"
             :url  "https://opensource.org/licenses/MIT"}
