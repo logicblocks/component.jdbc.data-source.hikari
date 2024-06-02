@@ -5,7 +5,14 @@
 (defn component
   ([]
    (component/map->HikariJdbcDataSource {}))
-  ([configuration delegate]
+  ([{:keys [delegate
+            configuration-specification
+            configuration-source
+            configuration
+            logger]}]
    (component/map->HikariJdbcDataSource
-     {:configuration configuration
-      :delegate      delegate})))
+     {:delegate                    delegate
+      :configuration-specification configuration-specification
+      :configuration-source        configuration-source
+      :configuration               configuration
+      :logger                      logger})))
