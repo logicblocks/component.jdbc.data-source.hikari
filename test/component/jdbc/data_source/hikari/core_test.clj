@@ -140,3 +140,28 @@
             :maximum-lifetime   (.toMillis TimeUnit/MINUTES 20)
             :auto-commit        false}
           (:configuration component)))))
+
+(deftest allows-configuration-lookup-key-to-be-provided
+  (let [delegate {:datasource (delegate-data-source)}
+        configuration-source
+        (conf/map-source
+          {:connection-pool-pool-name          "main"
+           :connection-pool-maximum-pool-size  15
+           :connection-pool-minimum-idle       10
+           :connection-pool-idle-timeout       (.toMillis TimeUnit/MINUTES 15)
+           :connection-pool-connection-timeout (.toMillis TimeUnit/SECONDS 20)
+           :connection-pool-maximum-lifetime   (.toMillis TimeUnit/MINUTES 20)
+           :connection-pool-auto-commit        false})
+        component (hikari-component/component
+                    {:delegate                    delegate
+                     :configuration-lookup-prefix :connection-pool})
+        component (conf-comp/configure component
+                    {:configuration-source configuration-source})]
+    (is (= {:pool-name          "main"
+            :maximum-pool-size  15
+            :minimum-idle       10
+            :idle-timeout       (.toMillis TimeUnit/MINUTES 15)
+            :connection-timeout (.toMillis TimeUnit/SECONDS 20)
+            :maximum-lifetime   (.toMillis TimeUnit/MINUTES 20)
+            :auto-commit        false}
+          (:configuration component)))))
