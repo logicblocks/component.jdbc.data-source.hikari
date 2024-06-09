@@ -30,8 +30,8 @@
    ^{:pom-scope :test}
    {:dependencies
     [[org.clojure/clojure "1.11.3"]
-     [org.postgresql/postgresql "42.6.0"]
-     [nrepl "1.1.1"]
+     [org.postgresql/postgresql "42.7.3"]
+     [nrepl "1.1.2"]
      [eftest "0.6.0"]]}
 
    :dev-specific
